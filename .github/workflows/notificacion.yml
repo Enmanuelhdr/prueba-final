@@ -1,4 +1,8 @@
-name: Despliegue de Notificaciones Automáticas
+name: Telegram Notification on Push to Main
+
+env:
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
 on:
     push:
@@ -6,22 +10,15 @@ on:
         - main
 
 jobs:
-    send-notification:
-        name: Enviar Notificación
+    Send-Telegram-Notification:
         runs-on: ubuntu-latest
-
         steps:
-        - name: Checkout código
-          uses: actions/checkout@v2
+        - uses: actions/checkout@v2
 
-        - name: Enviar Notificación a Telegram
+        - name: Send Telegram Notification
           run: |
-            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
-
-            message="Se realizó un push en la rama main de ${GITHUB_REPOSITORY}"
-            url="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
-            data="chat_id=${TELEGRAM_CHAT_ID}&text=${message}"
-            
-            response=$(curl -s -X POST "${url}?${data}")
-            echo "$response"
+            TELEGRAM_MESSAGE="A push was made to the main branch of ${GITHUB_REPOSITORY}"
+            TELEGRAM_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
+            TELEGRAM_DATA="chat_id=${TELEGRAM_CHAT_ID}&text=${TELEGRAM_MESSAGE}"
+            TELEGRAM_RESPONSE=$(curl -s -X POST "${TELEGRAM_URL}?${TELEGRAM_DATA}")
+            echo "$TELEGRAM_RESPONSE"
