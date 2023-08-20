@@ -13,12 +13,9 @@ jobs:
     Send-Telegram-Notification:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 
         - name: Send Telegram Notification
           run: |
             TELEGRAM_MESSAGE="A push was made to the main branch of ${GITHUB_REPOSITORY}"
-            TELEGRAM_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
-            TELEGRAM_DATA="chat_id=${TELEGRAM_CHAT_ID}&text=${TELEGRAM_MESSAGE}"
-            TELEGRAM_RESPONSE=$(curl -s -X POST "${TELEGRAM_URL}?${TELEGRAM_DATA}")
-            echo "$TELEGRAM_RESPONSE"
+            TELEGRAM_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}text=A push was made to the main branch of ${GITHUB_REPOSITORY}"
