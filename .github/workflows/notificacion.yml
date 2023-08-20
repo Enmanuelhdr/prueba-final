@@ -17,7 +17,7 @@ jobs:
         - name: Enviar Notificación a Telegram
           run: |
             TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-            TELEGRAM_CHAT_ID=<ID_DEL_CHAT>
+            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
 
             message="Se realizó un push en la rama main de ${GITHUB_REPOSITORY}"
             url="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
