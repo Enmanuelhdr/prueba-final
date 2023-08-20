@@ -10,7 +10,7 @@ document.querySelector('#app').innerHTML = `
       <button id="counter" type="button"></button>
     </div>
     <p class="read-the-docs">
-      Otro cambio otro mas uwu
+      Final
     </p>
   </div>
 `
