@@ -17,6 +17,4 @@ jobs:
 
         - name: Send Telegram Notification
           run: |
-            TELEGRAM_MESSAGE="A push was made to the main branch of ${GITHUB_REPOSITORY}"
-            TELEGRAM_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}text=${TELEGRAM_MESSAGE}"
-            curl "$TELEGRAM_URL"
+            curl "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}text=hola"
