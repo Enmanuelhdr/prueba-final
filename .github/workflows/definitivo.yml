@@ -30,9 +30,6 @@ jobs:
             cache: 'npm'
         - run: npm ci
         - run: npm test
-        - name: Establecer mensaje de error
-          if: ${{ failure() }}
-          run: echo "ERROR_MESSAGE=Error en el flujo de trabajo" >> $GITHUB_ENV
     
     Deploy-Production:
 
@@ -49,9 +46,6 @@ jobs:
           run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         - name: Deploy Project Artifacts to Vercel
           run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-        - name: Establecer mensaje de error
-          if: ${{ failure() }}
-          run: echo "ERROR_MESSAGE=Error en el flujo de trabajo" >> $GITHUB_ENV
 
     Enviar-mensaje:
 
@@ -72,7 +66,3 @@ jobs:
         
             - name: Ejecutar script
               run: node sendTelegramMessage.js
-
-            - name: Establecer mensaje de error
-              if: ${{ failure() }}
-              run: echo "ERROR_MESSAGE=Error en el flujo de trabajo" >> $GITHUB_ENV

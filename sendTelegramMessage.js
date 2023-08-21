@@ -2,15 +2,10 @@ import axios from 'axios';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-const DEFAULT_MESSAGE = 'Hola desde GitHub Actions!';
+const DEFAULT_MESSAGE = 'Cambios realizados en el la pagina';
 const ERROR_MESSAGE = process.env.ERROR_MESSAGE;
 
 async function sendTelegramMessage() {
-    let messageToSend = DEFAULT_MESSAGE;
-
-    if (ERROR_MESSAGE) {
-        messageToSend = ERROR_MESSAGE;
-    }
     try {
         const response = await axios.post(
             `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
