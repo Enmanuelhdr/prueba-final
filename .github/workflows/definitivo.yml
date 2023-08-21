@@ -3,7 +3,6 @@ name: Deployment
 env:
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    ERROR_MESSAGE: "Error en el flujo de trabajo"
 
 on:
     push:
