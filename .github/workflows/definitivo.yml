@@ -1,0 +1,65 @@
+name: Deployment
+
+env:
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    ERROR_MESSAGE: ""
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [18.x]
+            # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+        steps:
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - run: npm ci
+        - run: npm test
+    
+    Deploy-Production:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel
+          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+    enviar-mensaje:
+            runs-on: ubuntu-latest
+            
+            steps:
+            - name: Checkout del código
+              uses: actions/checkout@v2
+        
+            - name: Configurar Node.js
+              uses: actions/setup-node@v2
+              with:
+                node-version: '14'
+        
+            - name: Instalar dependencias
+              run: npm install
+        
+            - name: Ejecutar script
+              run: node sendTelegramMessage.js
