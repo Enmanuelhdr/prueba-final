@@ -12,7 +12,7 @@ class TaskManager {
     }
 }
 
-dscribe('TaskManager', () => {
+describe('TaskManager', () => {
     let taskManager;
 
     beforeEach(() => {
