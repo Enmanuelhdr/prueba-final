@@ -47,7 +47,7 @@ jobs:
         - name: Deploy Project Artifacts to Vercel
           run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-    enviar-mensaje:
+    Enviar-mensaje:
 
             runs-on: ubuntu-latest
             needs: Deploy-Production
@@ -66,3 +66,7 @@ jobs:
         
             - name: Ejecutar script
               run: node sendTelegramMessage.js
+
+            - name: Establecer mensaje de error
+              if: ${{ failure() }}
+              run: echo "ERROR_MESSAGE=Error en el flujo de trabajo" >> $GITHUB_ENV
